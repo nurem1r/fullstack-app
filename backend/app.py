@@ -28,6 +28,9 @@ if os.environ.get("DATABASE_URL"):
 
 @app.route("/api/data", methods=["GET"])
 def get_data():
+    if not DATABASE_URL:
+        return jsonify([])
+
     conn = get_conn()
     cur = conn.cursor()
     cur.execute("SELECT id, name FROM students;")
