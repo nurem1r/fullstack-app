@@ -23,7 +23,8 @@ def init_db():
     cur.close()
     conn.close()
 
-init_db()
+if os.environ.get("DATABASE_URL"):
+    init_db()
 
 @app.route("/api/data", methods=["GET"])
 def get_data():
