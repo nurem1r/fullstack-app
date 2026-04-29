@@ -1,9 +1,7 @@
-const API_URL = window.location.origin.includes("localhost")
-  ? "http://localhost:5000"
-  : import.meta?.env?.VITE_API_URL || "";
+const API = import.meta.env?.VITE_API_URL || "http://localhost:5000";
 
-async function loadData() {
-    const res = await fetch(`${API_URL}/api/data`);
+async function load() {
+    const res = await fetch(API + "/api/data");
     const data = await res.json();
 
     const list = document.getElementById("list");
@@ -11,37 +9,30 @@ async function loadData() {
 
     data.forEach(item => {
         const li = document.createElement("li");
-        li.textContent = item.name;
-
-        const btn = document.createElement("button");
-        btn.textContent = "Delete";
-        btn.onclick = () => deleteStudent(item.id);
-
-        li.appendChild(btn);
+        li.innerHTML = `${item[1]} <button onclick="del(${item[0]})">X</button>`;
         list.appendChild(li);
     });
 }
 
-async function addStudent() {
-    const name = document.getElementById("nameInput").value;
+async function add() {
+    const name = document.getElementById("name").value;
 
-    await fetch(`${API_URL}/api/data`, {
+    await fetch(API + "/api/data", {
         method: "POST",
-        headers: {
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify({ name })
+        headers: {"Content-Type": "application/json"},
+        body: JSON.stringify({name})
     });
 
-    loadData();
+    load();
 }
 
-async function deleteStudent(id) {
-    await fetch(`${API_URL}/api/data/${id}`, {
+async function del(id) {
+    await fetch(API + "/api/data/" + id, {
         method: "DELETE"
     });
 
-    loadData();
+    load();
 }
 
-loadData();
+load();
+
