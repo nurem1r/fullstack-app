@@ -11,6 +11,7 @@ def get_conn():
 
 # создаём таблицу при старте
 def init_db():
+    print("INIT DB CALLED")
     conn = get_conn()
     cur = conn.cursor()
     cur.execute("""
