@@ -1,4 +1,4 @@
-const API_URL = "YOUR_BACKEND_URL/api/data";
+const API_URL = "https://fullstack-app-production-2b7e.up.railway.app";
 
 async function loadTasks() {
     const response = await fetch(API_URL);
